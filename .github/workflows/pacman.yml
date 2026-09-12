@@ -24,13 +24,15 @@ jobs:
       - name: Create build dir
         run: mkdir -p dist
 
-      - name: Generate Pacman Contribution Graph
-        uses: abozanona/pacman-contribution-graph@v5.0.0
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          github_user_name: CharmanderTheGreat
-          game_theme: github-dark
+          node-version: 20
+
+      - name: Generate Pacman Contribution Graph (dark theme)
+        run: npx pacman-contribution-graph --platform github --username CharmanderTheGreat --gameTheme github-dark --output dist/pacman-contribution-graph.svg
         env:
-          NODE_OPTIONS: "--max_old_space_size=6144"
+          NODE_OPTIONS: "--max-old-space-size=6144"
 
       - name: Publish Pacman Graph
         uses: crazy-max/ghaction-github-pages@v4
